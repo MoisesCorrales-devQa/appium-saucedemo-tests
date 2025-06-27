@@ -12,6 +12,19 @@
     <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
+  <!-- Importar BOM de JUnit para versiones coherentes -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.10.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
     <!-- Appium -->
     <dependency>
@@ -27,44 +40,40 @@
       <version>4.19.0</version>
     </dependency>
 
-    <!-- JUnit 4 (¡no mezcles con JUnit 5!) -->
+    <!-- JUnit 5 completo (API + Engine) -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
 
-    <!-- Cucumber (para JUnit 4) -->
+    <!-- Suite support -->
     <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-java</artifactId>
-      <version>7.14.0</version>
-    </dependency>
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-junit</artifactId>
-      <version>7.14.0</version>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-api</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>compile</scope>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-api</artifactId>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Surefire plugin configurado para JUnit 4 y Cucumber -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M9</version>
         <configuration>
           <includes>
-            <include>**/TestRunner.java</include>
+            <include>**/*Test.java</include>
+            <include>**/*Tests.java</include>
+            <include>**/*Suite.java</include>
           </includes>
         </configuration>
       </plugin>

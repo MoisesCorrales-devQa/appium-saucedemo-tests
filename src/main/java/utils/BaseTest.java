@@ -1,5 +1,5 @@
 package utils;
-/*
+
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -25,7 +25,7 @@ public class BaseTest {
 
     @AfterEach
     public void resetAppAfterEachTest() {
-        /*try {
+        try {
             System.out.println("Esperando 3 segundos antes de borrar datos de la app");
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -50,4 +50,4 @@ public class BaseTest {
             }
         }
     }
-}*/
+}

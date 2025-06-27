@@ -12,8 +12,8 @@ public class DriverFactory {
     public static AndroidDriver createDriver() {
         UiAutomator2Options options = new UiAutomator2Options();
 
-        options.setDeviceName("P2129L002971");
-        options.setPlatformVersion("15");
+        options.setDeviceName("PRFUTCXGJB4LKRWS");
+        options.setPlatformVersion("14");
         options.setAutomationName("UiAutomator2");
 
         options.setApp("C:\\Users\\Usuario\\Desktop\\Appium\\Android-MyDemoAppRN.1.3.0.build-244.apk");

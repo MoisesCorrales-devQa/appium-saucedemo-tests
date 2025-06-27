@@ -1,5 +1,5 @@
 package mispruebas.myDemoApp.auth;
-/*
+
 import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -112,5 +112,5 @@ public class LogoutTests extends BaseTest {
         driver.findElement(AppiumBy.accessibilityId("Login button")).click();
     }
 
-}*/
+}
 

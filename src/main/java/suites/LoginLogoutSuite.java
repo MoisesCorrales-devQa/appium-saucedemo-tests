@@ -1,7 +1,8 @@
-package mispruebas.myDemoApp.suites;
-/*
+package suites;
+
 import mispruebas.myDemoApp.auth.LoginTests;
 import mispruebas.myDemoApp.auth.LogoutTests;
+
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
@@ -12,4 +13,3 @@ import org.junit.platform.suite.api.Suite;
 })
 public class LoginLogoutSuite {
 }
-*/

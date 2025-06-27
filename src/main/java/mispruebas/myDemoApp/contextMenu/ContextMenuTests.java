@@ -1,5 +1,5 @@
 package mispruebas.myDemoApp.contextMenu;
-/*
+
 import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -202,4 +202,3 @@ public class ContextMenuTests extends BaseTest {
     }
 
 }
-*/
