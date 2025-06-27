@@ -1,4 +1,4 @@
-package mispruebas.myDemoApp.auth;
+package myDemoAppTests.auth;
 
 import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.BeforeEach;

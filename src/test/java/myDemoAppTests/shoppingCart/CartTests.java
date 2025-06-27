@@ -1,4 +1,4 @@
-package mispruebas.myDemoApp.shoppingCart;
+package myDemoAppTests.shoppingCart;
 
 import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.BeforeEach;

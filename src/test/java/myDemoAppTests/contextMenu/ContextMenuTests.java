@@ -1,4 +1,4 @@
-package mispruebas.myDemoApp.contextMenu;
+package myDemoAppTests.contextMenu;
 
 import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.BeforeEach;
