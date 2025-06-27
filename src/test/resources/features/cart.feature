@@ -10,6 +10,7 @@ Feature: Funcionalidad del carrito de compras
     When el usuario elimina el producto del carrito
     Then el carrito debe estar vacío
 
+  @addProductsAndVerify
   Scenario: Añadir múltiples productos y verificar el total
     Given que el usuario está en la pantalla del catálogo
     When el usuario añade múltiples productos al carrito

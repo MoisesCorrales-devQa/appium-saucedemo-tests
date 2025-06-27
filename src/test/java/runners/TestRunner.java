@@ -6,10 +6,11 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        //features = "src/test/resources/features/",
-        features = "src/test/resources/features/contextMenu.feature",
+        features = "src/test/resources/features/",
+        //features = "src/test/resources/features/cart.feature/",
         glue = {"stepdefinitions"},
         plugin = {"pretty", "html:target/cucumber-report.html"},
-        monochrome = true
+        monochrome = true,
+        tags = "@biometricsAccess"
 )
 public class TestRunner {}

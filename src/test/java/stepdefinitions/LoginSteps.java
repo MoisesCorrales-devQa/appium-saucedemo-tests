@@ -13,8 +13,6 @@ public class LoginSteps {
         driver.findElement(AppiumBy.accessibilityId("open menu")).click();
 
         driver.findElement(AppiumBy.accessibilityId("menu item log in")).click();
-
-
     }
 
     @When("introduce el email {string} y password {string}")
