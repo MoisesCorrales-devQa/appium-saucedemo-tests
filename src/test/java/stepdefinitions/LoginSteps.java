@@ -2,6 +2,7 @@ package stepdefinitions;
 
 import io.appium.java_client.AppiumBy;
 import io.cucumber.java.en.*;
+import utils.Utils;
 
 import static org.junit.Assert.assertTrue;
 import static stepdefinitions.Hooks.driver;
@@ -13,15 +14,11 @@ public class LoginSteps {
         driver.findElement(AppiumBy.accessibilityId("open menu")).click();
 
         driver.findElement(AppiumBy.accessibilityId("menu item log in")).click();
-
-
     }
 
     @When("introduce el email {string} y password {string}")
     public void introducirCredenciales(String user, String password) {
-        driver.findElement(AppiumBy.accessibilityId("Username input field")).sendKeys(user);
-        driver.findElement(AppiumBy.accessibilityId("Password input field")).sendKeys(password);
-        driver.findElement(AppiumBy.accessibilityId("Login button")).click();
+        Utils.loginComo(user, password);
     }
 
     @Then("accede correctamente al panel principal")

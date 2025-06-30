@@ -6,18 +6,21 @@ import io.cucumber.java.en.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static stepdefinitions.Hooks.driver;
+import static stepdefinitions.Hooks.context;
 
 public class CartSteps {
 
     private String productNameAdded;
     private double calculatedTotal;
+
 
     @Given("que el usuario está en la pantalla del catálogo")
     public void el_usuario_esta_en_catalogo() {
@@ -29,6 +32,12 @@ public class CartSteps {
     @When("el usuario añade el primer producto al carrito")
     public void el_usuario_anade_producto() {
         productNameAdded = addProductToCartAndVerify(0);
+        context.setContext("addedProduct", productNameAdded);
+
+        String priceText = driver.findElement(AppiumBy.accessibilityId("total price")).getText();
+        Double cartPrice = Double.parseDouble(priceText.replace("$", ""));
+
+        context.setContext("cartPrice", cartPrice);
     }
 
     @Then("el producto debe estar visible en el carrito")
@@ -70,10 +79,25 @@ public class CartSteps {
 
     @Then("la suma total debe coincidir con el total mostrado en el carrito")
     public void el_total_debe_coincidir() {
-        List<WebElement> productPrices = driver.findElements(AppiumBy.accessibilityId("product price"));
+        Set<String> seenPrices = new HashSet<>();
         double total = 0;
-        for (WebElement price : productPrices) {
-            total += Double.parseDouble(price.getText().replace("$", ""));
+
+        int previousCount = -1;
+        int currentCount = 0;
+
+        while (previousCount < currentCount || previousCount == -1) {
+            previousCount = seenPrices.size();
+
+            List<WebElement> prices = driver.findElements(AppiumBy.accessibilityId("product price"));
+            for (WebElement price : prices) {
+                String priceText = price.getText();
+                if (seenPrices.add(priceText)) {
+                    total += Double.parseDouble(priceText.replace("$", ""));
+                }
+            }
+
+            currentCount = seenPrices.size();
+            scrollDown(); // intente hacer scroll, pero sin depender de si funciona o no
         }
 
         WebElement totalElement = driver.findElement(AppiumBy.accessibilityId("total price"));
@@ -81,6 +105,7 @@ public class CartSteps {
 
         assertEquals(total, totalInApp, 0.01);
     }
+
 
     private String addProductToCartAndVerify(int itemId) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -109,4 +134,15 @@ public class CartSteps {
 
         return productName;
     }
+
+    private void scrollDown() {
+        try {
+            driver.findElement(AppiumBy.androidUIAutomator(
+                    "new UiScrollable(new UiSelector().scrollable(true)).scrollForward()"));
+        } catch (Exception e) {
+            // Ya no puede hacer scroll, ignora
+        }
+    }
+
+
 }

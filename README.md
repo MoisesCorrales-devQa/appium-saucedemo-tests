@@ -70,7 +70,7 @@ Actualmente, la suite automatizada cubre las siguientes funcionalidades clave de
 
 4. **Iniciar un emulador Android o conectar un dispositivo físico.**
 
-5. **Configurar las capabilities necesarias** en la clase `DriverFactory.java` antes de ejecutar las pruebas.
+5. **Configurar las capabilities necesarias** en el fichero config.properties  antes de ejecutar las pruebas.
 
 6. **Ejecutar las pruebas** con Maven:
 

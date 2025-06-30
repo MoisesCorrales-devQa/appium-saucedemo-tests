@@ -12,18 +12,18 @@ public class DriverFactory {
     public static AndroidDriver createDriver() {
         UiAutomator2Options options = new UiAutomator2Options();
 
-        options.setDeviceName("P2129L002971");
-        options.setPlatformVersion("15");
-        options.setAutomationName("UiAutomator2");
+        options.setDeviceName(ConfigLoader.get("deviceName"));
+        options.setPlatformVersion(ConfigLoader.get("platformVersion"));
+        options.setAutomationName(ConfigLoader.get("automationName"));
+        options.setApp(ConfigLoader.get("appPath"));
 
-        options.setApp("C:\\Users\\Usuario\\Desktop\\Appium\\Android-MyDemoAppRN.1.3.0.build-244.apk");
-
-        options.setNewCommandTimeout(Duration.ofSeconds(60));
+        long timeout = Long.parseLong(ConfigLoader.get("newCommandTimeout"));
+        options.setNewCommandTimeout(Duration.ofSeconds(timeout));
 
         AndroidDriver driver = null;
 
         try {
-            URL appiumServerURL = new URL("http://127.0.0.1:4723/");
+            URL appiumServerURL = new URL(ConfigLoader.get("appiumServerURL"));
             driver = new AndroidDriver(appiumServerURL, options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         } catch (MalformedURLException e) {
@@ -34,4 +34,3 @@ public class DriverFactory {
         return driver;
     }
 }
-
