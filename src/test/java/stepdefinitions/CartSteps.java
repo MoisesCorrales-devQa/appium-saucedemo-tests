@@ -6,7 +6,6 @@ import io.cucumber.java.en.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
@@ -15,11 +14,13 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static stepdefinitions.Hooks.driver;
+import static stepdefinitions.Hooks.context;
 
 public class CartSteps {
 
     private String productNameAdded;
     private double calculatedTotal;
+
 
     @Given("que el usuario está en la pantalla del catálogo")
     public void el_usuario_esta_en_catalogo() {
@@ -31,6 +32,12 @@ public class CartSteps {
     @When("el usuario añade el primer producto al carrito")
     public void el_usuario_anade_producto() {
         productNameAdded = addProductToCartAndVerify(0);
+        context.setContext("addedProduct", productNameAdded);
+
+        String priceText = driver.findElement(AppiumBy.accessibilityId("total price")).getText();
+        Double cartPrice = Double.parseDouble(priceText.replace("$", ""));
+
+        context.setContext("cartPrice", cartPrice);
     }
 
     @Then("el producto debe estar visible en el carrito")
