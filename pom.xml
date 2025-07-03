@@ -17,14 +17,7 @@
     <dependency>
       <groupId>io.appium</groupId>
       <artifactId>java-client</artifactId>
-      <version>9.2.2</version>
-    </dependency>
-
-    <!-- Selenium -->
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>4.19.0</version>
+      <version>9.5.0</version>
     </dependency>
 
     <!-- JUnit 4 (¡no mezcles con JUnit 5!) -->
