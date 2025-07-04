@@ -13,5 +13,6 @@ import io.cucumber.junit.CucumberOptions;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
         },
         monochrome = true
+        //tags = "@login_valido"
 )
 public class TestRunner {}
