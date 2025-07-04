@@ -1,10 +1,12 @@
 Feature: Funcionalidad del carrito de compras
 
+  @addToCart
   Scenario: Añadir un producto al carrito
     Given que el usuario está en la pantalla del catálogo
     When el usuario añade el primer producto al carrito
     Then el producto debe estar visible en el carrito
 
+  @deleteFromCart
   Scenario: Eliminar un producto del carrito
     Given que el usuario añadió un producto al carrito
     When el usuario elimina el producto del carrito

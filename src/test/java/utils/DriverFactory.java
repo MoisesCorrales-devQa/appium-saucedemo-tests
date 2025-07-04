@@ -7,6 +7,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+
 public class DriverFactory {
 
     public static AndroidDriver createDriver() {
@@ -26,6 +32,9 @@ public class DriverFactory {
             URL appiumServerURL = new URL(ConfigLoader.get("appiumServerURL"));
             driver = new AndroidDriver(appiumServerURL, options);
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+            EnvironmentWriter.write(driver);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error en la URL del servidor Appium");
@@ -33,4 +42,5 @@ public class DriverFactory {
 
         return driver;
     }
+
 }

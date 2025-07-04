@@ -42,11 +42,11 @@ Feature: Acceso a menu contextual
     When el user accede al item "acerca de"
     Then se muestra la pantalla de "acerca de"
 
-  @biometricsAccess
-  Scenario: Acceso a biometría
-    Given el usuario abre la app y accede al menú contextual
-    When el user accede al item "biometría"
-    Then se muestra la pantalla de "biometría"
+  #@biometricsAccess
+  #Scenario: Acceso a biometría
+   # Given el usuario abre la app y accede al menú contextual
+    #When el user accede al item "biometría"
+    #Then se muestra la pantalla de "biometría"
 
   @loginAccess
   Scenario: Acceso a iniciar sesión

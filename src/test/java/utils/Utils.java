@@ -9,4 +9,5 @@ public class Utils {
         driver.findElement(AppiumBy.accessibilityId("Password input field")).sendKeys(contrasena);
         driver.findElement(AppiumBy.accessibilityId("Login button")).click();
     }
+
 }

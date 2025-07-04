@@ -1,7 +1,6 @@
 package stepdefinitions;
 
 import io.appium.java_client.AppiumBy;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
