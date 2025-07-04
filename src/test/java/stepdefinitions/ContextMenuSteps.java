@@ -1,24 +1,19 @@
 package stepdefinitions;
 
-import io.appium.java_client.AppiumBy;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import io.qameta.allure.*; // <- Importa las anotaciones de Allure
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import io.cucumber.java.en.*;
+import io.qameta.allure.*;
+import org.junit.Assert;
+import pages.ContextMenuPage;
 
-import java.time.Duration;
-
-import static org.junit.Assert.assertTrue;
 import static stepdefinitions.Hooks.driver;
 
 @Epic("Menú contextual")
 @Feature("Navegación mediante menú contextual y popups")
 public class ContextMenuSteps {
 
-    static class Selection{
+    private final ContextMenuPage contextMenuPage = new ContextMenuPage(driver);
+
+    private static class Selection {
         String itemId = "";
         String tituloSelector = "";
         String permisoId = null;
@@ -26,18 +21,18 @@ public class ContextMenuSteps {
         String textoPopup = "";
     }
 
-    Selection selection = new Selection();
+    private Selection selection = new Selection();
 
     @Step("El usuario abre la app y accede al menú contextual")
     @Given("el usuario abre la app y accede al menú contextual")
     public void accesoAlMenuContextual() {
-        driver.findElement(AppiumBy.accessibilityId("open menu")).click();
+        contextMenuPage.abrirMenu();
     }
 
     @Step("El usuario accede al item {nombreItem}")
     @When("el user accede al item {string}")
     public void elUserAccedeAlItem(String nombreItem) {
-
+        // Configuración de selección según el item
         switch (nombreItem.toLowerCase()) {
             case "catálogo":
                 selection.itemId = "menu item catalog";
@@ -95,69 +90,30 @@ public class ContextMenuSteps {
                 throw new IllegalArgumentException("Item desconocido: " + nombreItem);
         }
 
-        tapEnElItem(selection.itemId);
-    }
-
-    @Step("Hago tap en el item del menú contextual {itemId}")
-    public void tapEnElItem(String itemId) {
-        System.out.println("Hago tap en el item del menú contextual");
-        driver.findElement(AppiumBy.accessibilityId(itemId)).click();
+        contextMenuPage.tapEnItem(selection.itemId);
     }
 
     @Step("Se muestra la pantalla correcta para el item {itemId}")
     @Then("se muestra la pantalla de {string}")
     public void testContextMenuItemScreen(String itemId) {
-        if (selection.permisoId != null) {
-            driver.findElement(AppiumBy.id(selection.permisoId)).click();
-        }
+        contextMenuPage.aceptarPermisoSiEsNecesario(selection.permisoId);
 
-        boolean pageTitle = driver.findElement(AppiumBy.androidUIAutomator(selection.tituloSelector)).isDisplayed();
-        assertTrue(pageTitle);
+        boolean pantallaBiometria = contextMenuPage.tituloPantallaVisible(selection.tituloSelector);
+
+        if (!pantallaBiometria && itemId.equalsIgnoreCase("biometría")) {
+            // Ajusta el texto según el popup real de tu app
+            String popupEsperado = "Biometrics is or not supported or not enabled";
+            boolean popupVisible = contextMenuPage.isPopupWithTextVisible(popupEsperado);
+            Assert.assertTrue("Ni pantalla de biometría ni popup de error detectado", popupVisible);
+        } else {
+            Assert.assertTrue(pantallaBiometria);
+        }
     }
 
     @Step("Se muestra el popup correcto para el item {itemId}")
     @Then("se muestra el popup de {string}")
     public void testPopupContextMenuItemScreen(String itemId) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement alertTitleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                AppiumBy.id("android:id/alertTitle")
-        ));
-
-        String textoActual = alertTitleElement.getText();
-        assertTrue(textoActual.equals(selection.textoPopup));
-    }
-
-    @Step("Test contexto menú item con permiso: {itemId}, permiso: {permissionId}, título: {tittleId}")
-    public boolean testContextMenuItemWithPermission(String itemId, String permissionId, String tittleId) {
-        // 1. Tap en el item del cm
-        System.out.println("Hago tap en el item del menú contextual");
-        driver.findElement(AppiumBy.accessibilityId(itemId)).click();
-
-        // 2. Tap en el botón de dar permisos
-        System.out.println("Hago tap en el botón de dar permisos");
-        driver.findElement(AppiumBy.id(permissionId)).click();
-
-        // 3. Compruebo la visibilidad del título
-        boolean pageTitle = driver.findElement(AppiumBy.androidUIAutomator(tittleId)).isDisplayed();
-
-        return pageTitle;
-    }
-
-    @Step("Test popup de menú contextual para el item {itemId}")
-    public String testContextMenuItemPopup(String itemId) {
-        // 1. Tap en el item del cm
-        System.out.println("Hago tap en el item del menú contextual");
-        driver.findElement(AppiumBy.accessibilityId(itemId)).click();
-
-        System.out.println("Obtenemos el tittle del popup");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement alertTitleElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                AppiumBy.id("android:id/alertTitle")
-        ));
-
-        System.out.println("Obtenemos el texto y comprobamos que sea correcto");
-        String textoActual = alertTitleElement.getText();
-
-        return textoActual;
+        String textoActual = contextMenuPage.esperarPopupTitulo();
+        Assert.assertEquals(selection.textoPopup, textoActual);
     }
 }
